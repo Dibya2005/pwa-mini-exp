@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Expense Tracker</h1>
+
+    <div class="balance">
+      <h3>Balance: ₹<span id="balance">0</span></h3>
+      <p>Income: ₹<span id="income">0</span></p>
+      <p>Expense: ₹<span id="expense">0</span></p>
+    </div>
+
+    <form id="expenseForm">
+      <input type="text" id="description" placeholder="Description" required>
+      <input type="number" id="amount" placeholder="Amount" required>
+      <select id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <input type="text" id="category" placeholder="Category">
+      <button type="submit">Add</button>
+    </form>
+
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select>
+
+    <ul id="list"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
