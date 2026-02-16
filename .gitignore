@@ -1,0 +1,15 @@
+.cache/
+dist/
+build/
+
+# ========================
+# DATABASE FILES (if any)
+# ========================
+*.sql
+*.sqlite
+*.db
+# ========================
+# NODE MODULES
+# ========================
+server/node_modules/
+node_modules/
