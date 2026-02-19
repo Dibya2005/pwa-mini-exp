@@ -84,6 +84,11 @@ function deleteExpense(index) {
   expenses.splice(index, 1);
   updateLocalStorage();
   updateUI();
+  fetch(`server/api.php?id=${index}`, {
+    method: "DELETE"
+  })
+  .then(res => res.json())
+  .then(data => console.log(data));
 }
 
 /* -------------------
@@ -119,7 +124,7 @@ if ("serviceWorker" in navigator) {
    SERVER SYNC
 -------------------- */
 function syncToServer(expense) {
-  fetch("http://localhost:4000/add-expense", {
+  fetch("server/api.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(expense)

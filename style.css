@@ -1,49 +1,149 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+/* Body */
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f4f4f4;
   margin: 0;
-  padding: 0;
+  padding: 10px;
 }
 
+/* Main Container */
 .container {
+  width: 100%;
   max-width: 400px;
-  margin: 30px auto;
+  margin: 20px auto;
   background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Heading */
 h1 {
   text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
 }
 
-form input, form select, form button {
-  width: 100%;
-  padding: 8px;
+/* Balance Section */
+.balance {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.balance h3 {
   margin: 5px 0;
 }
 
+.balance p {
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+/* Form */
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Button */
 button {
   background: #4CAF50;
   color: white;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 }
 
+button:hover {
+  background: #45a049;
+}
+
+/* Filter Dropdown */
+#filter {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* List */
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
+/* List Items */
 li {
   background: #eee;
-  margin: 5px 0;
-  padding: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  font-size: 14px;
 }
 
+/* Buttons inside list */
 li div button {
   margin-left: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+/* 📱 Mobile Optimization */
+@media (max-width: 480px) {
+  .container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  form input,
+  form select,
+  form button {
+    font-size: 13px;
+  }
+
+  li {
+    font-size: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  li div {
+    margin-top: 8px;
+  }
+}
+
+/* 💻 Tablet */
+@media (min-width: 600px) {
+  .container {
+    max-width: 500px;
+  }
+}
+
+/* 🖥 Desktop */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 600px;
+  }
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = "expense-tracker-v1";
+const CACHE_NAME = "expense-tracker-v2";
 
 const urlsToCache = [
   "./",
@@ -6,8 +6,8 @@ const urlsToCache = [
   "style.css",
   "app.js",
   "manifest.json",
-  "icons/icon-192.png",
-  "icons/icon-512.png"
+  "icons/icon-192.jpeg",
+  "icons/icon-512.jpeg"
 ];
 
 self.addEventListener("install", event => {
