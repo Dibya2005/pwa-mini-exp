@@ -1,96 +1,58 @@
 // app.js
 
-// Function to initialize local storage and sync with server
-function init() {
-    const data = loadFromLocalStorage();
-    // Syncing with the server to get the latest data
-    fetch('https://example.com/api/data/')
-        .then(response => response.json())
-        .then(serverData => {
-            // Properly mapping server IDs
-            serverData.forEach(item => {
-                if (!data.some(localItem => localItem.id === item.id)) {
-                    data.push(item);
-                }
-            });
-            saveToLocalStorage(data);
-            renderData(data);
-        })
-        .catch(err => console.error('Error syncing with server:', err));
+const expenses = [];
+let nextId = 1;
+
+// Function to create an expense
+function createExpense(description, amount) {
+    const expense = { id: nextId++, description, amount };
+    expenses.push(expense);
+    syncToServer(expense);
+    return expense;
 }
 
-// CRUD Function to add item
-function addItem(newItem) {
-    const data = loadFromLocalStorage();
-    // Ensuring that IDs are generated and tracked properly
-    newItem.id = generateNewId();
-    data.push(newItem);
-    saveToLocalStorage(data);
-    syncWithServer(newItem, 'add');
-    renderData(data);
+// Function to read all expenses
+function readExpenses() {
+    return expenses;
 }
 
-// Function to edit an existing item
-function editItem(updatedItem) {
-    let data = loadFromLocalStorage();
-    const index = data.findIndex(item => item.id === updatedItem.id);
+// Function to update an expense
+function updateExpense(id, updatedData) {
+    const index = expenses.findIndex(exp => exp.id === id);
     if (index !== -1) {
-        data[index] = updatedItem;
-        saveToLocalStorage(data);
-        syncWithServer(updatedItem, 'edit');
-        renderData(data);
+        expenses[index] = { ...expenses[index], ...updatedData };
+        syncToServer(expenses[index]);
+        return expenses[index];
     } else {
-        console.error('Item not found for editing');
+        throw new Error('Expense not found');
     }
 }
 
-// Function to delete an item
-function deleteItem(itemId) {
-    let data = loadFromLocalStorage();
-    const index = data.findIndex(item => item.id === itemId);
+// Function to delete an expense
+function deleteExpense(id) {
+    const index = expenses.findIndex(exp => exp.id === id);
     if (index !== -1) {
-        const removedItem = data.splice(index, 1);
-        saveToLocalStorage(data);
-        syncWithServer(removedItem, 'delete');
-        renderData(data);
+        const [deletedExpense] = expenses.splice(index, 1);
+        syncToServer(deletedExpense, 'DELETE');
+        return deletedExpense;
     } else {
-        console.error('Item not found for deletion');
+        throw new Error('Expense not found');
     }
 }
 
-// Syncing changes with server
-function syncWithServer(item, action) {
-    fetch(`https://example.com/api/data/${action}`, {
-        method: 'POST',
+// Function to sync expenses to the server
+function syncToServer(expense, method = 'POST') {
+    const url = 'https://yourserver.com/api/expenses';
+    const options = {
+        method: method,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(item),
-    })
-    .then(response => response.json())
-    .then(data => console.log('Server response:', data))
-    .catch(error => console.error('Error:', error));
-}
+        body: JSON.stringify(expense)
+    };
 
-// Placeholder function to load data from local storage
-function loadFromLocalStorage() {
-    return JSON.parse(localStorage.getItem('data')) || [];
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => console.log('Sync success:', data))
+        .catch(error => console.error('Sync error:', error));
 }
-
-// Placeholder function to save data to local storage
-function saveToLocalStorage(data) {
-    localStorage.setItem('data', JSON.stringify(data));
-}
-
-// Function to render data (placeholder implementation)
-function renderData(data) {
-    console.log('Rendering data:', data);
-}
-
-// Function to generate new unique IDs
-function generateNewId() {
-    return Math.floor(Math.random() * 1000000);
-}
-
-// Initialize the application
-init();
